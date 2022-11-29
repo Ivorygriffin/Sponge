@@ -1,52 +1,43 @@
-#if ENABLE_INPUT_SYSTEM 
-using UnityEngine.InputSystem;
-#endif
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-
+    public InputActionAsset input;
+    InputAction movement;
+    InputAction look;
+    InputAction jump;
     public CharacterController controller;
 
+    [Space(15)]
     public float speed = 12f;
     public float gravity = -10f;
     public float jumpHeight = 2f;
+    public float lookSpeed = 10f;
 
+    [Space(15)]
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
-    
 
-    Vector3 velocity;
+    [Space(15)]
+    public Transform model;
+
+    public Vector3 velocity;
     bool isGrounded;
-
-#if ENABLE_INPUT_SYSTEM
-    InputAction movement;
-    InputAction jump;
-
+    // Start is called before the first frame update
     void Start()
     {
-        movement = new InputAction("PlayerMovement", binding: "<Gamepad>/leftStick");
-        movement.AddCompositeBinding("Dpad")
-            .With("Up", "<Keyboard>/w")
-            .With("Up", "<Keyboard>/upArrow")
-            .With("Down", "<Keyboard>/s")
-            .With("Down", "<Keyboard>/downArrow")
-            .With("Left", "<Keyboard>/a")
-            .With("Left", "<Keyboard>/leftArrow")
-            .With("Right", "<Keyboard>/d")
-            .With("Right", "<Keyboard>/rightArrow");
-        
-        jump = new InputAction("PlayerJump", binding: "<Gamepad>/a");
-        jump.AddBinding("<Keyboard>/space");
-
+        input.Enable();
+        movement = input.FindAction("Movement");
         movement.Enable();
+        look = input.FindAction("Look");
+        look.Enable();
+        jump = input.FindAction("Jump");
         jump.Enable();
     }
-#endif
 
     // Update is called once per frame
     void Update()
@@ -55,16 +46,12 @@ public class PlayerMovement : MonoBehaviour
         float z;
         bool jumpPressed = false;
 
-#if ENABLE_INPUT_SYSTEM
-        var delta = movement.ReadValue<Vector2>();
+        transform.Rotate(new Vector3(0, look.ReadValue<Vector2>().x * lookSpeed * Time.deltaTime, 0), Space.World);
+
+        Vector2 delta = movement.ReadValue<Vector2>();
         x = delta.x;
         z = delta.y;
         jumpPressed = Mathf.Approximately(jump.ReadValue<float>(), 1);
-#else
-        x = Input.GetAxis("Horizontal");
-        z = Input.GetAxis("Vertical");
-        jumpPressed = Input.GetButtonDown("Jump");
-#endif
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
@@ -77,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
 
         controller.Move(move * speed * Time.deltaTime);
 
-        if(jumpPressed && isGrounded)
+        if (jumpPressed && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
@@ -85,5 +72,9 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+
+
+        //if (move != Vector3.zero)
+        //    model.forward = move.normalized;
     }
 }
