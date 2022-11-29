@@ -46,11 +46,18 @@ public class PlayerMovement : MonoBehaviour
         float z;
         bool jumpPressed = false;
 
+        lookSpeed = 20;
         transform.Rotate(new Vector3(0, look.ReadValue<Vector2>().x * lookSpeed * Time.deltaTime, 0), Space.World);
 
         Vector2 delta = movement.ReadValue<Vector2>();
         x = delta.x;
         z = delta.y;
+        Vector3 move = transform.right * x + transform.forward * z;
+
+        //transform.Rotate(new Vector3(0, movement.ReadValue<Vector2>().x * lookSpeed * Time.deltaTime, 0), Space.World);
+        //z = movement.ReadValue<Vector2>().y;
+        //Vector3 move = transform.forward * z;
+
         jumpPressed = Mathf.Approximately(jump.ReadValue<float>(), 1);
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
@@ -59,8 +66,6 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity.y = -2f;
         }
-
-        Vector3 move = transform.right * x + transform.forward * z;
 
         controller.Move(move * speed * Time.deltaTime);
 
@@ -74,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
 
 
-        //if (move != Vector3.zero)
-        //    model.forward = move.normalized;
+        if (move != Vector3.zero)
+            model.forward = move.normalized;
     }
 }
