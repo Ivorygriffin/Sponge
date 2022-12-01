@@ -269,7 +269,8 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 1
-  model: {fileID: 3935177239299571964}
+  model: {fileID: 2868598490845142594}
+  camera: {fileID: 0}
   velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &5477665162780145981
 GameObject:
