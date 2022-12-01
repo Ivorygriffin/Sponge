@@ -401,9 +401,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa082b3800336c0458906d3f53be973b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  input: {fileID: -944628639613478452, guid: 469da0f7559f7a74aa9192b182137a4c, type: 3}
   target: {fileID: 210356728}
   offset: {x: 0, y: 3, z: -7}
-  snapTime: 0.25
+  snapTime: 0.15
+  lookSpeed: 20
 --- !u!1 &1672764243
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,7 +674,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7282a1c8516bedd40bb64b4af1c53584, type: 2}
+  - {fileID: 2100000, guid: ad7596f0acaeee94e94ebedeb6de1a3c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -797,6 +799,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2673841217695131317, guid: ca79c5f12cf01e545b8716484894c41f, type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 1337400919}
     - target: {fileID: 4321281141884492060, guid: ca79c5f12cf01e545b8716484894c41f, type: 3}
       propertyPath: m_Name
       value: Player

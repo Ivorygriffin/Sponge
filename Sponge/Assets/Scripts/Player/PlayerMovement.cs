@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Space(15)]
     public Transform model;
+    public CameraMovement camera;
 
     public Vector3 velocity;
     bool isGrounded;
@@ -46,13 +47,12 @@ public class PlayerMovement : MonoBehaviour
         float z;
         bool jumpPressed = false;
 
-        lookSpeed = 20;
-        transform.Rotate(new Vector3(0, look.ReadValue<Vector2>().x * lookSpeed * Time.deltaTime, 0), Space.World);
-
         Vector2 delta = movement.ReadValue<Vector2>();
         x = delta.x;
         z = delta.y;
         Vector3 move = transform.right * x + transform.forward * z;
+
+        move = camera.moveRotation * move;
 
         //transform.Rotate(new Vector3(0, movement.ReadValue<Vector2>().x * lookSpeed * Time.deltaTime, 0), Space.World);
         //z = movement.ReadValue<Vector2>().y;
