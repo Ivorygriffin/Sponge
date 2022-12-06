@@ -260,7 +260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: {fileID: -944628639613478452, guid: 469da0f7559f7a74aa9192b182137a4c, type: 3}
   controller: {fileID: 26257558246982430}
-  speed: 12
+  speed: 15
   gravity: -94.6
   jumpHeight: 7
   jumpCount: 2
