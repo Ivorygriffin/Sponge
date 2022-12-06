@@ -13,6 +13,10 @@ public class CameraMovement : MonoBehaviour
     public Vector3 offset;
     Vector3 velocity;
     Vector3 rotation;
+
+    [Space(15)]
+    public LayerMask cameraCollision;
+
     public Quaternion moveRotation
     {
         get
@@ -40,7 +44,12 @@ public class CameraMovement : MonoBehaviour
 
         Vector3 localOffset = Quaternion.Euler(rotation) * offset;
 
-        transform.position = target.position + localOffset;
+        RaycastHit hit;
+        Ray ray = new Ray(target.position, localOffset);
+        if (Physics.Raycast(ray, out hit, localOffset.magnitude, cameraCollision))
+            transform.position = hit.point;
+        else
+            transform.position = target.position + localOffset;
         //transform.position = Vector3.SmoothDamp(transform.position, target.position + localOffset, ref velocity, snapTime);
         transform.LookAt(target.position);
     }

@@ -181,7 +181,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                     ""id"": ""d8f6b2b3-1152-4a6b-be04-d6d9e770fbc8"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""ScaleVector2(x=11.8421,y=11.8421)"",
                     ""groups"": """",
                     ""action"": ""Look"",
                     ""isComposite"": false,
