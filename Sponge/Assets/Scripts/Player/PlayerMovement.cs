@@ -15,7 +15,11 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 12f;
     public float gravity = -10f;
     public float jumpHeight = 2f;
+    public int jumpCount = 2;
+    public int jumpCounter;
     public float lookSpeed = 10f;
+
+    bool jumpPressed = false;
 
     [Space(15)]
     public Transform groundCheck;
@@ -38,6 +42,9 @@ public class PlayerMovement : MonoBehaviour
         look.Enable();
         jump = input.FindAction("Jump");
         jump.Enable();
+        jump.performed += ctx => jumpPressed = true;
+
+        jumpCounter = jumpCount;
     }
 
     // Update is called once per frame
@@ -45,7 +52,6 @@ public class PlayerMovement : MonoBehaviour
     {
         float x;
         float z;
-        bool jumpPressed = false;
 
         Vector2 delta = movement.ReadValue<Vector2>();
         x = delta.x;
@@ -58,20 +64,21 @@ public class PlayerMovement : MonoBehaviour
         //z = movement.ReadValue<Vector2>().y;
         //Vector3 move = transform.forward * z;
 
-        jumpPressed = Mathf.Approximately(jump.ReadValue<float>(), 1);
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
+            jumpCounter = jumpCount;
         }
 
         controller.Move(move * speed * Time.deltaTime);
 
-        if (jumpPressed && isGrounded)
+        if (jumpPressed && (jumpCounter > 0 || isGrounded))
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            jumpCounter--;
         }
 
         velocity.y += gravity * Time.deltaTime;
@@ -81,5 +88,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (move != Vector3.zero)
             model.forward = move.normalized;
+
+
+        jumpPressed = false;
     }
 }

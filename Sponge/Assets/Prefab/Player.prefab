@@ -261,8 +261,10 @@ MonoBehaviour:
   input: {fileID: -944628639613478452, guid: 469da0f7559f7a74aa9192b182137a4c, type: 3}
   controller: {fileID: 26257558246982430}
   speed: 12
-  gravity: -10
-  jumpHeight: 2
+  gravity: -94.6
+  jumpHeight: 7
+  jumpCount: 2
+  jumpCounter: 0
   lookSpeed: 270
   groundCheck: {fileID: 3965013188199254956}
   groundDistance: 0.4
