@@ -35,7 +35,7 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        lookSpeed = 20;
+        //lookSpeed= 20; james removed to test. 19 is perfect for mouse. Need to sort a seperate one for controller. 225 is good for controller
         rotation += new Vector3(0, look.ReadValue<Vector2>().x * lookSpeed * Time.deltaTime, 0);
 
         Vector3 localOffset = Quaternion.Euler(rotation) * offset;

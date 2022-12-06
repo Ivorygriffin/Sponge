@@ -210,7 +210,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 2
-  m_Radius: 0.5
+  m_Radius: 0.24
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -260,9 +260,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: {fileID: -944628639613478452, guid: 469da0f7559f7a74aa9192b182137a4c, type: 3}
   controller: {fileID: 26257558246982430}
-  speed: 15
-  gravity: -94.6
-  jumpHeight: 7
+  speed: 18
+  gravity: -108.21
+  jumpHeight: 5.5
   jumpCount: 2
   jumpCounter: 0
   lookSpeed: 270
