@@ -9,10 +9,13 @@ public class PlayerMovement : MonoBehaviour
     InputAction movement;
     InputAction look;
     InputAction jump;
+    InputAction boost;
     public CharacterController controller;
 
     [Space(15)]
-    public float speed = 12f;
+    public float speed = 18f;
+    public float boostSpeed = 24f;
+
     public float gravity = -10f;
     public float jumpHeight = 2f;
     public int jumpCount = 2;
@@ -29,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     [Space(15)]
     public Transform model;
     public CameraMovement camera;
+    public Animator animator;
 
     public Vector3 velocity;
     bool isGrounded;
@@ -36,15 +40,21 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         input.Enable();
+
         movement = input.FindAction("Movement");
         movement.Enable();
+
         look = input.FindAction("Look");
         look.Enable();
+
         jump = input.FindAction("Jump");
         jump.Enable();
         jump.performed += ctx => jumpPressed = true;
-
         jumpCounter = jumpCount;
+
+        boost = input.FindAction("Boost");
+        boost.Enable();
+
     }
 
     // Update is called once per frame
@@ -63,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
         //transform.Rotate(new Vector3(0, movement.ReadValue<Vector2>().x * lookSpeed * Time.deltaTime, 0), Space.World);
         //z = movement.ReadValue<Vector2>().y;
         //Vector3 move = transform.forward * z;
+        float boostPressed = boost.ReadValue<float>();
 
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
@@ -73,7 +84,8 @@ public class PlayerMovement : MonoBehaviour
             jumpCounter = jumpCount;
         }
 
-        controller.Move(move * speed * Time.deltaTime);
+        animator.SetFloat("Blend", move.magnitude);
+        controller.Move(move * (boostPressed > 0.7f ? boostSpeed : speed) * Time.deltaTime);
 
         if (jumpPressed && (jumpCounter > 0 || isGrounded))
         {

@@ -261,6 +261,7 @@ MonoBehaviour:
   input: {fileID: -944628639613478452, guid: 469da0f7559f7a74aa9192b182137a4c, type: 3}
   controller: {fileID: 26257558246982430}
   speed: 18
+  boostSpeed: 24
   gravity: -108.21
   jumpHeight: 5.5
   jumpCount: 2
@@ -273,6 +274,7 @@ MonoBehaviour:
     m_Bits: 1
   model: {fileID: 2868598490845142594}
   camera: {fileID: 0}
+  animator: {fileID: 2325535659696503211}
   velocity: {x: 0, y: 0, z: 0}
 --- !u!1 &5477665162780145981
 GameObject:
@@ -580,5 +582,10 @@ PrefabInstance:
 --- !u!4 &2868598490845142594 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5739212169064806204, guid: 3933625dc2c4e4a47ad17f557ffa82a0, type: 3}
+  m_PrefabInstance: {fileID: 7523975860265625982}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2325535659696503211 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5201515123214749909, guid: 3933625dc2c4e4a47ad17f557ffa82a0, type: 3}
   m_PrefabInstance: {fileID: 7523975860265625982}
   m_PrefabAsset: {fileID: 0}
