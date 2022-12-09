@@ -22,6 +22,10 @@ public class PlayerMovement : MonoBehaviour
     int jumpCounter;
     public float lookSpeed = 10f;
 
+    public float waterUseSpeed = 1;
+    public float waterMax = 10f;
+    float waterCount;
+
     bool jumpPressed = false;
 
     [Space(15)]
@@ -55,6 +59,8 @@ public class PlayerMovement : MonoBehaviour
         boost = input.FindAction("Boost");
         boost.Enable();
 
+
+        waterCount = waterMax;
     }
 
     // Update is called once per frame
@@ -75,6 +81,9 @@ public class PlayerMovement : MonoBehaviour
         //Vector3 move = transform.forward * z;
         float boostPressed = boost.ReadValue<float>();
 
+        if (boostPressed > 0.7f && waterCount > 0)
+            waterCount -= Time.deltaTime * waterUseSpeed;
+
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
@@ -85,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         animator.SetFloat("Blend", move.magnitude);
-        controller.Move(move * (boostPressed > 0.7f ? boostSpeed : speed) * Time.deltaTime);
+        controller.Move(move * (boostPressed > 0.7f && waterCount > 0 ? boostSpeed : speed) * Time.deltaTime);
 
         if (jumpPressed && (jumpCounter > 0 || isGrounded))
         {
@@ -101,6 +110,7 @@ public class PlayerMovement : MonoBehaviour
         if (move != Vector3.zero)
             model.forward = move.normalized;
 
+        UIManager.Instance.waterPercent = waterCount / waterMax;
 
         jumpPressed = false;
     }

@@ -1,10 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
+
+    public Image water;
+    public float waterPercent
+    {
+        set
+        {
+            water.fillAmount = value;
+        }
+    }
 
     public int score = 0;
 
