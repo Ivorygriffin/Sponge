@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float waterUseSpeed = 1;
     public float waterMax = 10f;
-    float waterCount;
+    public float waterCount;
 
     bool jumpPressed = false;
 
