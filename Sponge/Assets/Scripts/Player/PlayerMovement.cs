@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public float gravity = -10f;
     public float jumpHeight = 2f;
     public int jumpCount = 2;
-    public int jumpCounter;
+    int jumpCounter;
     public float lookSpeed = 10f;
 
     bool jumpPressed = false;
