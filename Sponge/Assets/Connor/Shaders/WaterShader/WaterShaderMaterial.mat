@@ -31,14 +31,18 @@ Material:
     MotionVector: User
     RenderType: Transparent
   disabledShaderPasses:
+  - MOTIONVECTORS
+  - RayTracingPrepass
+  - TransparentBackface
   - TransparentDepthPrepass
   - TransparentDepthPostpass
-  - TransparentBackface
-  - RayTracingPrepass
-  - MOTIONVECTORS
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_d5993ca55bd74324b93eb78b714a64fc:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AnisotropyMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -132,7 +136,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_1a7403ae49104047984e92e649df50fe: 9.79
+    - Vector1_1a7403ae49104047984e92e649df50fe: 8.52
+    - Vector1_6c46e8bc4cc94728abd1a561ce956878: 0
+    - Vector1_c69c914a67f84334a2b5c8eb005b6470: 74.7
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ATDistance: 1
@@ -246,8 +252,9 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 0
     m_Colors:
-    - Color_2d79253e7ade415dabaec50f44d2b362: {r: 0, g: 0.74914646, b: 1, a: 1}
-    - Color_5493776dc907433ea84a293f2b1b3654: {r: 0, g: 0.9014342, b: 1, a: 1}
+    - Color_2d79253e7ade415dabaec50f44d2b362: {r: 0, g: 0.6694645, b: 1, a: 1}
+    - Color_5493776dc907433ea84a293f2b1b3654: {r: 0.27830178, g: 0.9352432, b: 1, a: 0.9647059}
+    - Vector2_dc48d3743f754c548cfde9382a111012: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
