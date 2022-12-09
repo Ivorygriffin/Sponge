@@ -404,6 +404,10 @@ MonoBehaviour:
   input: {fileID: -944628639613478452, guid: 469da0f7559f7a74aa9192b182137a4c, type: 3}
   target: {fileID: 210356728}
   offset: {x: 0, y: 3, z: -7}
+  AngleLimit: {x: -30, y: 60}
+  cameraCollision:
+    serializedVersion: 2
+    m_Bits: 0
   snapTime: 0.15
   lookSpeed: 20
 --- !u!1 &1672764243
