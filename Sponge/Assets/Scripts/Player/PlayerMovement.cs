@@ -24,7 +24,12 @@ public class PlayerMovement : MonoBehaviour
 
     public float waterUseSpeed = 1;
     public float waterMax = 10f;
-    public float waterCount;
+    float waterCount;
+    public float WaterCount
+    {
+        get { return waterCount; }
+        set { waterCount = Mathf.Clamp(value, 0, waterMax); }
+    }
 
     bool jumpPressed = false;
 
@@ -110,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
         if (move != Vector3.zero)
             model.forward = move.normalized;
 
-        UIManager.Instance.waterPercent = waterCount / waterMax;
+        UIManager.Instance.waterPercent = WaterCount / waterMax;
 
         jumpPressed = false;
     }

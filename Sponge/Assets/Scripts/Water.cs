@@ -14,7 +14,7 @@ public class Water : MonoBehaviour
             if (player == null)
                 player = other.GetComponent<PlayerMovement>();
 
-            player.waterCount += fillSpeed * Time.deltaTime;
+            player.WaterCount += fillSpeed * Time.deltaTime;
         }
     }
 }
