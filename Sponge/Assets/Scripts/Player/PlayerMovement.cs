@@ -93,8 +93,6 @@ public class PlayerMovement : MonoBehaviour
         //Vector3 move = transform.forward * z;
         float boostPressed = boost.ReadValue<float>();
 
-        if (boostPressed > 0.7f && waterCount > 0)
-            waterCount -= Time.deltaTime * waterUseSpeed;
 
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
@@ -120,7 +118,11 @@ public class PlayerMovement : MonoBehaviour
 
 
         if (move != Vector3.zero)
+        {
             model.forward = move.normalized;
+            if (boostPressed > 0.7f && waterCount > 0)
+                waterCount -= Time.deltaTime * waterUseSpeed;
+        }
 
         UIManager.Instance.waterPercent = WaterCount / waterMax;
 
