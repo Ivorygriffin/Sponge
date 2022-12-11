@@ -16,13 +16,20 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 18f;
     public float boostSpeed = 24f;
 
+    [Tooltip("Acceleration due to gravity, added per second to y velocity")]
     public float gravity = -10f;
+    [Tooltip("Velocity is set to this value while grounded")]
+    public float cloudGravity = -2f;
+    [Tooltip("Height in meters the player jumps")]
     public float jumpHeight = 2f;
+    [Tooltip("Amount of jumps the player can use before touching the ground")]
     public int jumpCount = 2;
     int jumpCounter;
     public float lookSpeed = 10f;
 
+    [Tooltip("Amount of water used by boost")]
     public float waterUseSpeed = 1;
+    [Tooltip("Amount of water the player can store")]
     public float waterMax = 10f;
     float waterCount;
     public float WaterCount
@@ -94,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded && velocity.y < 0)
         {
-            velocity.y = -2f;
+            velocity.y = cloudGravity;
             jumpCounter = jumpCount;
         }
 

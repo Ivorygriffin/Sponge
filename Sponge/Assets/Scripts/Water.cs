@@ -5,7 +5,7 @@ using UnityEngine;
 public class Water : MonoBehaviour
 {
     PlayerMovement player;
-    float fillSpeed = 5;
+    public float fillSpeed = 5;
 
     private void OnTriggerStay(Collider other)
     {
