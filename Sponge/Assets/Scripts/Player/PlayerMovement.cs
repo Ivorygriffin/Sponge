@@ -16,11 +16,27 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 18f;
     public float boostSpeed = 24f;
 
+    [Tooltip("Acceleration due to gravity, added per second to y velocity")]
     public float gravity = -10f;
+    [Tooltip("Velocity is set to this value while grounded")]
+    public float cloudGravity = -2f;
+    [Tooltip("Height in meters the player jumps")]
     public float jumpHeight = 2f;
+    [Tooltip("Amount of jumps the player can use before touching the ground")]
     public int jumpCount = 2;
-    public int jumpCounter;
+    int jumpCounter;
     public float lookSpeed = 10f;
+
+    [Tooltip("Amount of water used by boost")]
+    public float waterUseSpeed = 1;
+    [Tooltip("Amount of water the player can store")]
+    public float waterMax = 10f;
+    float waterCount;
+    public float WaterCount
+    {
+        get { return waterCount; }
+        set { waterCount = Mathf.Clamp(value, 0, waterMax); }
+    }
 
     bool jumpPressed = false;
 
@@ -55,6 +71,8 @@ public class PlayerMovement : MonoBehaviour
         boost = input.FindAction("Boost");
         boost.Enable();
 
+
+        waterCount = waterMax;
     }
 
     // Update is called once per frame
@@ -76,16 +94,17 @@ public class PlayerMovement : MonoBehaviour
         float boostPressed = boost.ReadValue<float>();
 
 
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
         {
-            velocity.y = -2f;
+            velocity.y = cloudGravity;
             jumpCounter = jumpCount;
         }
 
         animator.SetFloat("Blend", move.magnitude);
-        controller.Move(move * (boostPressed > 0.7f ? boostSpeed : speed) * Time.deltaTime);
+        controller.Move(move * (boostPressed > 0.7f && waterCount > 0 ? boostSpeed : speed) * Time.deltaTime);
 
         if (jumpPressed && (jumpCounter > 0 || isGrounded))
         {
@@ -99,8 +118,13 @@ public class PlayerMovement : MonoBehaviour
 
 
         if (move != Vector3.zero)
+        {
             model.forward = move.normalized;
+            if (boostPressed > 0.7f && waterCount > 0)
+                waterCount -= Time.deltaTime * waterUseSpeed;
+        }
 
+        UIManager.Instance.waterPercent = WaterCount / waterMax;
 
         jumpPressed = false;
     }
