@@ -9,13 +9,36 @@ public class PlayerMovement : MonoBehaviour
     InputAction movement;
     InputAction look;
     InputAction jump;
+    InputAction boost;
     public CharacterController controller;
 
     [Space(15)]
-    public float speed = 12f;
+    public float speed = 18f;
+    public float boostSpeed = 24f;
+
+    [Tooltip("Acceleration due to gravity, added per second to y velocity")]
     public float gravity = -10f;
+    [Tooltip("Velocity is set to this value while grounded")]
+    public float cloudGravity = -2f;
+    [Tooltip("Height in meters the player jumps")]
     public float jumpHeight = 2f;
+    [Tooltip("Amount of jumps the player can use before touching the ground")]
+    public int jumpCount = 2;
+    int jumpCounter;
     public float lookSpeed = 10f;
+
+    [Tooltip("Amount of water used by boost")]
+    public float waterUseSpeed = 1;
+    [Tooltip("Amount of water the player can store")]
+    public float waterMax = 10f;
+    float waterCount;
+    public float WaterCount
+    {
+        get { return waterCount; }
+        set { waterCount = Mathf.Clamp(value, 0, waterMax); }
+    }
+
+    bool jumpPressed = false;
 
     [Space(15)]
     public Transform groundCheck;
@@ -25,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
     [Space(15)]
     public Transform model;
     public CameraMovement camera;
+    public Animator animator;
 
     public Vector3 velocity;
     bool isGrounded;
@@ -32,12 +56,23 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         input.Enable();
+
         movement = input.FindAction("Movement");
         movement.Enable();
+
         look = input.FindAction("Look");
         look.Enable();
+
         jump = input.FindAction("Jump");
         jump.Enable();
+        jump.performed += ctx => jumpPressed = true;
+        jumpCounter = jumpCount;
+
+        boost = input.FindAction("Boost");
+        boost.Enable();
+
+
+        waterCount = waterMax;
     }
 
     // Update is called once per frame
@@ -45,7 +80,6 @@ public class PlayerMovement : MonoBehaviour
     {
         float x;
         float z;
-        bool jumpPressed = false;
 
         Vector2 delta = movement.ReadValue<Vector2>();
         x = delta.x;
@@ -57,21 +91,25 @@ public class PlayerMovement : MonoBehaviour
         //transform.Rotate(new Vector3(0, movement.ReadValue<Vector2>().x * lookSpeed * Time.deltaTime, 0), Space.World);
         //z = movement.ReadValue<Vector2>().y;
         //Vector3 move = transform.forward * z;
+        float boostPressed = boost.ReadValue<float>();
 
-        jumpPressed = Mathf.Approximately(jump.ReadValue<float>(), 1);
+
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
         {
-            velocity.y = -2f;
+            velocity.y = cloudGravity;
+            jumpCounter = jumpCount;
         }
 
-        controller.Move(move * speed * Time.deltaTime);
+        animator.SetFloat("Blend", move.magnitude);
+        controller.Move(move * (boostPressed > 0.7f && waterCount > 0 ? boostSpeed : speed) * Time.deltaTime);
 
-        if (jumpPressed && isGrounded)
+        if (jumpPressed && (jumpCounter > 0 || isGrounded))
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            jumpCounter--;
         }
 
         velocity.y += gravity * Time.deltaTime;
@@ -80,6 +118,14 @@ public class PlayerMovement : MonoBehaviour
 
 
         if (move != Vector3.zero)
+        {
             model.forward = move.normalized;
+            if (boostPressed > 0.7f && waterCount > 0)
+                waterCount -= Time.deltaTime * waterUseSpeed;
+        }
+
+        UIManager.Instance.waterPercent = WaterCount / waterMax;
+
+        jumpPressed = false;
     }
 }

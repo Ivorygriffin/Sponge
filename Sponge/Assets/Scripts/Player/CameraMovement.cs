@@ -11,8 +11,16 @@ public class CameraMovement : MonoBehaviour
     [Space(15)]
     public Transform target;
     public Vector3 offset;
-    Vector3 velocity;
+
     Vector3 rotation;
+    Vector3 localOffset;
+
+    [Space(15)]
+    public Vector2 AngleLimit = new Vector2(-30, 60);
+
+    [Space(15)]
+    public LayerMask cameraCollision;
+
     public Quaternion moveRotation
     {
         get
@@ -35,12 +43,21 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        lookSpeed = 20;
-        rotation += new Vector3(0, look.ReadValue<Vector2>().x * lookSpeed * Time.deltaTime, 0);
+        //lookSpeed= 20; james removed to test. 19 is perfect for mouse. Need to sort a seperate one for controller. 225 is good for controller
+        rotation += new Vector3(
+        look.ReadValue<Vector2>().y * -lookSpeed * Time.deltaTime,
+        look.ReadValue<Vector2>().x * lookSpeed * Time.deltaTime, 0);
 
-        Vector3 localOffset = Quaternion.Euler(rotation) * offset;
+        rotation.x = Mathf.Clamp(rotation.x, AngleLimit.x, AngleLimit.y);
 
-        transform.position = target.position + localOffset;
+        localOffset = Quaternion.Euler(rotation) * offset;
+
+        RaycastHit hit;
+        Ray ray = new Ray(target.position, localOffset);
+        if (Physics.Raycast(ray, out hit, localOffset.magnitude, cameraCollision))
+            transform.position = hit.point;
+        else
+            transform.position = target.position + localOffset;
         //transform.position = Vector3.SmoothDamp(transform.position, target.position + localOffset, ref velocity, snapTime);
         transform.LookAt(target.position);
     }
