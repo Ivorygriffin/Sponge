@@ -3485,14 +3485,6 @@ PrefabInstance:
       propertyPath: camera
       value: 
       objectReference: {fileID: 1337400919}
-    - target: {fileID: 2673841217695131317, guid: ca79c5f12cf01e545b8716484894c41f, type: 3}
-      propertyPath: cloudGravity
-      value: -0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2673841217695131317, guid: ca79c5f12cf01e545b8716484894c41f, type: 3}
-      propertyPath: groundMask.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
     - target: {fileID: 4321281141884492060, guid: ca79c5f12cf01e545b8716484894c41f, type: 3}
       propertyPath: m_Name
       value: Player
