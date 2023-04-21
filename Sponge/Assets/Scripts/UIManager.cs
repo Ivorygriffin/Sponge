@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
     public Image water;
+    public string sceneToLoad;
     public float waterPercent
     {
         set
@@ -45,4 +46,11 @@ public class UIManager : MonoBehaviour
     {
         score += value;
     }
+
+    public void LoadScene()
+    {
+        SceneManager.LoadScene(sceneToLoad);
+    }
+
+
 }
