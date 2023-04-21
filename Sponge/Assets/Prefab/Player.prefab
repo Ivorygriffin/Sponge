@@ -263,17 +263,15 @@ MonoBehaviour:
   speed: 18
   boostSpeed: 24
   gravity: -108.21
-  cloudGravity: -0.25
   jumpHeight: 5.5
   jumpCount: 2
+  jumpCounter: 0
   lookSpeed: 270
-  waterUseSpeed: 1
-  waterMax: 10
   groundCheck: {fileID: 3965013188199254956}
   groundDistance: 0.4
   groundMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1
   model: {fileID: 2868598490845142594}
   camera: {fileID: 0}
   animator: {fileID: 2325535659696503211}
