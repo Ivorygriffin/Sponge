@@ -31,12 +31,20 @@ public class PlayerMovement : MonoBehaviour
     public float waterUseSpeed = 1;
     [Tooltip("Amount of water the player can store")]
     public float waterMax = 10f;
+    public float collectableMax = 6f;
     float waterCount;
+    float collectableCount;
     public float WaterCount
     {
         get { return waterCount; }
         set { waterCount = Mathf.Clamp(value, 0, waterMax); }
     }
+    public float CollectableCount
+    {
+        get { return collectableCount; }
+        set { collectableCount = Mathf.Clamp(value, 0, collectableMax); }
+    } 
+   
 
     bool jumpPressed = false;
 
@@ -73,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         waterCount = waterMax;
+        collectableCount = collectableMax;
     }
 
     // Update is called once per frame
@@ -125,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         UIManager.Instance.waterPercent = WaterCount / waterMax;
-
+        UIManager.Instance.collectablePercent = CollectableCount / collectableMax;
         jumpPressed = false;
     }
 }
