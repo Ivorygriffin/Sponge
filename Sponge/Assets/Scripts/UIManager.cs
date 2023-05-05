@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
 
     public Image water;
+    public Image duck;
     public float waterPercent
     {
         set
@@ -15,7 +16,14 @@ public class UIManager : MonoBehaviour
             water.fillAmount = value;
         }
     }
-
+    public float collectablePercent
+    {
+        set
+        {
+            duck.fillAmount = value;
+        }
+    }
+    
     public int score = 0;
 
     // Start is called before the first frame update
@@ -38,7 +46,7 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public void AddScore(int value = 1)

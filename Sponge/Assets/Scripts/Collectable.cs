@@ -5,8 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class Collectable : MonoBehaviour
 {
+   
     public Transform modelTransform;
     public float rotationSpeed = 90;
+    
 
     // Start is called before the first frame update
     void Start()
